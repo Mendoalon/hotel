@@ -1,0 +1,42 @@
+{% extends 'post/base4.html' %}
+
+{% block content %}
+<h5>{% block title %} Reporte :  "{{ post['title'] }}" {% endblock %}</h5>
+
+<form method="/post">
+
+
+    <div class="form-group">
+        <label for="title">Descripciòn:</label>
+        <input type="text" name="title" placeholder="Descripción:"
+               class="form-control"
+               value="{{ request.form['title'] or post['title'] }}">
+        </input>
+    </div>
+
+
+
+
+
+
+    <div class="form-group">
+        <label for="content">Conmentario</label>
+        <textarea name="content" placeholder="Contenido"
+                  class="form-control">{{ request.form['content'] or post['content'] }}</textarea>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Registrar</button>
+    </div>
+
+
+</form>
+<hr>
+
+<form action="{{ url_for('delete4', id=post['id']) }}" method="POST">
+    <input type="submit" value="Eliminar comentario"
+            class="btn btn-danger btn-sm"
+            onclick="return confirm('Est´Usted seguro de querer eliminar este comnetario?')">
+</form>
+
+
+{% endblock %}

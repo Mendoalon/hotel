@@ -1,0 +1,19 @@
+{% extends 'post/base4.html' %}
+
+{% block content %}
+    <h2>{% block title %} Reporte sobre las habitaciones {% endblock %}</h2>
+
+{% for post in posts %}
+    <a href="{{ url_for('post', post_id=post['id']) }}">
+        <h4>{{ post['title'] }}</h4>
+
+        </a>
+        <span class="badge badge-primary">{{ post['created'] }}</span>
+
+         <a href="{{ url_for('edit4', id=post['id']) }}">
+            <span class="badge badge-warning">Editar-Modificar</span>
+        </a>
+
+        <hr>
+    {% endfor %}
+{% endblock %}

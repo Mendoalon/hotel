@@ -1,0 +1,216 @@
+{% extends 'rooms/base1.html' %}
+
+{% include 'rooms/header1.html' %}
+ 
+{% block title %} HAbitaciones del Hotel {% endblock %}
+ 
+{% block body %}
+ 
+<div class="container">
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron p-3">
+ 
+                <h2>Registro de : <b>Habitaciones </b>  <button type="button"  class="btn btn-success float-right"
+                data-toggle="modal" data-target="#mymodal">Agregar habitaciones</button> </h2>
+
+                {% with messages = get_flashed_messages() %}
+                      {% if messages %}
+                            {% for message in messages %}
+
+                               <div class="alert alert-success alert-dismissable" role="alert">
+ 
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                                       <span aria-hidden="true">x</span>
+                                  </button>
+ 
+                                    {{message}}
+                              </div>
+ 
+                             {% endfor %}
+                     {% endif %}
+                {% endwith %}
+ 
+                <table class="table table-hover table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Tipo</th>
+                        <th>Ubicación</th>
+                        <th>Número</th>
+                        <th>Seleccionar Acción</th>
+                    </tr>
+
+                   {% for row in xrooms %}
+                    <tr>
+                        <td>{{row.id}}</td>
+                        <td>{{row.tipo}}</td>
+                        <td>{{row.piso}}</td>
+                        <td>{{row.numero}}</td>
+                        <td>
+                            <a href="/update1/{{row.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.id}}">Modificar</a>
+
+                            <a href="/delete1/{{row.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Està seguro de querer eliminarla?')">Eliminar</a>
+                        </td>
+                    </tr>
+ 
+                        <!-- Editar habitacion  -->
+
+                        <div
+                             id="modaledit{{row.id}}" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+ 
+ 
+      <div class="modal-content">
+ 
+ 
+         <div class="modal-header">
+ 
+ 
+            <h4 class="modal-title">Modificar Informaciòn</h4>
+ 
+ 
+         </div>
+ 
+ 
+         <div class="modal-body">
+ 
+ 
+            <form action="{{url_for('update1')}}" method="POST">
+ 
+ 
+               <div class="form-group">
+ 
+ 
+                  <label>Tipo:</label>
+                   <input type="hidden"  name="id" value="{{row.id}}">
+ 
+                  <input type="text" class="form-control" name="tipo" value="{{row.tipo}}">
+ 
+ 
+               </div>
+ 
+ 
+ 
+               <div class="form-group">
+ 
+ 
+                  <label>Ubicación:</label>
+ 
+                  <input type="text" class="form-control" name="piso" value="{{row.piso}}">
+ 
+ 
+               </div>
+ 
+ 
+               <div class="form-group">
+ 
+ 
+                  <label>Número:</label>
+ 
+                  <input type="text" class="form-control" name="numero" value="{{row.numero}}">
+ 
+ 
+               </div>
+ 
+ 
+               <div class="form-group">
+ 
+ 
+                  <button class="btn btn-primary" type="submit">Actualizar</button>
+ 
+ 
+               </div>
+ 
+ 
+            </form>
+ 
+ 
+         </div>
+ 
+ 
+         <div class="modal-footer">
+ 
+ 
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Terminar</button>
+ 
+ 
+         </div>
+ 
+ 
+      </div>
+ 
+ 
+   </div>
+                        </div>
+
+                    {% endfor %}
+ 
+                </table>
+ 
+            </div>
+ 
+ 
+ 
+                        <!-- Agregar Habitaciòn-->
+ 
+               <div id="mymodal" class="modal fade" role="dialog">
+                       <div class="modal-dialog">
+                            <div class="modal-content">
+                                 <div class="modal-header">
+
+
+                                    <h4 class="modal-title">Agregar Habitaciòn</h4>
+                                 </div>
+                                       <div class="modal-body">
+                                           <form action="{{url_for('insert1')}}" method="POST">
+ 
+                                               <div class="form-group">
+                                                    <label>Tipo:</label>
+                                                    <input type="text" class="form-control" name="tipo" required="1">
+                                               </div>
+
+                                               <div class="form-group">
+                                                   <label>Ubicación:</label>
+                                                   <input type="piso" class="form-control" name="piso" required="1">
+                                              </div>
+
+                                              <div class="form-group">
+                                                    <label>Número:</label>
+                                                    <input type="number" class="form-control" name="numero" required="1">
+                                               </div>
+
+                                              <div class="form-group">
+                                                   <button class="btn btn-primary" type="submit">Agregar habitación</button>
+                                              </div>
+
+                                         </form>
+ 
+                                       </div>
+ 
+ 
+                                      <div class="modal-footer">
+                                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Terminar</button>
+                                    </div>
+
+                             </div>
+                        </div>
+ 
+
+
+
+ 
+</div>
+ 
+ 
+ 
+ 
+ 
+        </div>
+ 
+    </div>
+ 
+ 
+</div>
+ 
+ 
+{% endblock %}

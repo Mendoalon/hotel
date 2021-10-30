@@ -1,0 +1,221 @@
+{% extends 'mant/base3.html' %}
+
+{% include 'mant/header3.html' %}
+ 
+{% block title %} Habitaciones del Hotel {% endblock %}
+ 
+{% block body %}
+ 
+<div class="container">
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron p-3">
+ 
+                <h3><b>Mantenimiento Habitaciones </b>  <button type="button"  class="btn btn-success float-right"
+                data-toggle="modal" data-target="#mymodal">No usar</button> </h3>
+
+                {% with messages = get_flashed_messages() %}
+                      {% if messages %}
+                            {% for message in messages %}
+
+                               <div class="alert alert-success alert-dismissable" role="alert">
+ 
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                                       <span aria-hidden="true">x</span>
+                                  </button>
+ 
+                                    {{message}}
+                              </div>
+ 
+                             {% endfor %}
+                     {% endif %}
+                {% endwith %}
+ 
+                <table class="table table-hover table-dark">
+                    <tr>
+                        <th>Semana</th>
+                        <th>Habitación</th>
+                        <th>Doble:</th>
+                        <th>Habitación</th>
+                        <th>Sencilla: </th>
+                        <th></th>
+                    </tr>
+
+                    <tr>
+                        <th>que inicia</th>
+                        <th style="text-align:center">Libre</th>
+                        <th>No Apta</th>
+                        <th style="text-align:center">Libre</th>
+                        <th>No Apta</th>
+                        <th></th>
+                    </tr>
+
+
+                   {% for row in xweeks %}
+                    <tr>
+
+                        <td>{{row.start}}</td>
+
+                        <td style="text-align:center">{{row.t1_lib}}</td>
+                        <td style="text-align:center">{{row.t1_man}}</td>
+                        <td style="text-align:center">{{row.t2_lib}}</td>
+                        <td style="text-align:center">{{row.t2_man}}</td>
+
+
+
+                        <td>
+                            <a href="/update3/{{row.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.id}}">Modificar</a>
+
+
+                        </td>
+                    </tr>
+ 
+
+
+<!-- Editar habitacion  -->
+
+                        <div
+                             id="modaledit{{row.id}}" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+ 
+ 
+      <div class="modal-content">
+ 
+ 
+         <div class="modal-header">
+ 
+ 
+            <h4 class="modal-title">Modificar Informaciòn</h4>
+ 
+ 
+         </div>
+ 
+ 
+         <div class="modal-body">
+ 
+ 
+            <form action="{{url_for('update3')}}" method="POST">
+ 
+ 
+               <div class="form-group">
+                  <label>Inicia:</label>
+                   <input type="hidden"  name="id" value="{{row.id}}">
+                  <input type="text" class="form-control" name="start" value="{{row.start}}">
+               </div>
+ 
+               <div class="form-group">
+                  <label>Tipo 1 En mantenimiento:</label>
+                  <input type="Integer" class="form-control" name="t1_man" value="{{row.t1_man}}">
+               </div>
+
+
+                 <div class="form-group">
+                  <label>Tipo 2 En mantenimiento:</label>
+                  <input type="Integer" class="form-control" name="t2_man" value="{{row.t2_man}}">
+               </div>
+
+
+
+               <div class="form-group">
+ 
+ 
+                  <button class="btn btn-primary" type="submit">Actualizar</button>
+ 
+ 
+               </div>
+ 
+ 
+            </form>
+ 
+ 
+         </div>
+ 
+ 
+         <div class="modal-footer">
+ 
+ 
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Terminar</button>
+ 
+ 
+         </div>
+ 
+ 
+      </div>
+ 
+ 
+   </div>
+                        </div>
+
+                    {% endfor %}
+ 
+                </table>
+ 
+            </div>
+ 
+ 
+ 
+ <!-- Agregar Habitaciòn-->
+ 
+               <div id="mymodal" class="modal fade" role="dialog">
+                       <div class="modal-dialog">
+                            <div class="modal-content">
+                                 <div class="modal-header">
+
+
+                                    <h4 class="modal-title">Agregar semana</h4>
+                                 </div>
+                                       <div class="modal-body">
+                                           <form action="{{url_for('insert3')}}" method="POST">
+ 
+                                               <div class="form-group">
+                                                    <label>Inicia:</label>
+                                                    <input type="text" class="form-control" name="start" required="1">
+                                               </div>
+
+                                               <div class="form-group">
+                                                   <label>Termina:</label>
+                                                   <input type="text" class="form-control" name="ends" required="1">
+                                              </div>
+
+
+
+                                               <div class="form-group">
+                                                    <label>Reserva Tipo 1 :</label>
+                                                    <input type="number" class="form-control" name="t1_res" required="1">
+                                               </div>
+
+
+                                              <div class="form-group">
+                                                    <label>Reserva Tipo 2 :</label>
+                                                    <input type="number" class="form-control" name="t2_res" required="1">
+                                              </div>
+
+
+                                              <div class="form-group">
+                                                   <button class="btn btn-primary" type="submit">Agregar semana</button>
+                                              </div>
+
+                                         </form>
+ 
+                                       </div>
+ 
+ 
+                                      <div class="modal-footer">
+                                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Terminar</button>
+                                    </div>
+
+                             </div>
+                        </div>
+ 
+</div>
+ 
+ 
+        </div>
+ 
+    </div>
+ 
+ 
+</div>
+ 
+ 
+{% endblock %}

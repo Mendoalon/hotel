@@ -1,0 +1,24 @@
+
+{% extends 'post/base4.html' %}
+
+{% block content %}
+<h5>{% block title %} Crear un nuevo comentario {% endblock %}</h5>
+
+<form method="post">
+    <div class="form-group">
+        <label for="title">Descripciòn</label>
+        <input type="text" name="title"
+               placeholder="Titulo del comentario (maximo 80 caracteres" class="form-control"
+               value="{{ request.form['title'] }}"></input>
+    </div>
+
+    <div class="form-group">
+        <label for="content">Comentario:</label>
+        <textarea name="content" placeholder="Descripción del comentario"
+                  class="form-control">{{ request.form['content'] }}</textarea>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Registar</button>
+    </div>
+</form>
+{% endblock %}
